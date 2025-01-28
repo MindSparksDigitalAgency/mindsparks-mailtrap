@@ -10,7 +10,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Config\Router;
+use App\config\Router;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
