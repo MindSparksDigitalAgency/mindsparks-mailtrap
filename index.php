@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+
 /**
  * @ORM\PrePersist
  * @author Puji Ermanto<pujiermanto@gmail.com>
@@ -14,6 +13,9 @@ require 'vendor/autoload.php';
 use App\Config\Router;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 $logger = new Logger('my_logger');
 
