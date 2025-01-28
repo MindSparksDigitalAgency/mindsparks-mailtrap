@@ -8,7 +8,7 @@
  * @expectedException
  */
 
-require 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Config\Router;
 use Monolog\Logger;
