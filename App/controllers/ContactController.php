@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @ORM\PrePersist
+ * @author Puji Ermanto<pujiermanto@gmail.com>
+ * @param string $
+ */
+
 namespace App\controllers;
 
 use App\services\EmailService;
