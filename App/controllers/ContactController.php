@@ -28,7 +28,7 @@ class ContactController
 
         $name = $data['name'];
         $email = $data['email'];
-        $service = $data['service'];
+        $phone = $data['phone'];
         $message = $data['message'];
 
         $to = 'halo@mindsparks.id';
@@ -37,7 +37,7 @@ class ContactController
             Hi Mindspark.id,\n\n
             Name: $name\n
             Email: $email\n
-            Service: $service\n\n
+            phone: $phone\n\n
             Message:\n$message
         ";
 
