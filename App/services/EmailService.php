@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @ORM\PrePersist
- * @author Puji Ermanto<pujiermanto@gmail.com>
- * @param string $
- */
-
 namespace App\services;
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -28,15 +22,13 @@ class EmailService
         $this->mailer->SMTPAuth = true;
         $this->mailer->Username = 'landing.page@mindsparks.id';
         $this->mailer->Password = 'mindSparks@321';
-        // $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        // $this->mailer->Port = 587;
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mailer->Port = 465;
         $this->mailer->Timeout = 60;
         $this->mailer->SMTPDebug = 0;
     }
 
-    public function sendEmail($to, $subject, $body, $from, $fromName)
+    public function sendEmail($to, $subject, $body, $from, $fromName, $headers = null)
     {
         try {
             $this->mailer->setFrom($from, $fromName);
@@ -47,6 +39,14 @@ class EmailService
 
             $this->mailer->Subject = $subject;
             $this->mailer->Body = $body;
+            $this->mailer->isHTML(true); // Menyatakan bahwa body email adalah HTML
+
+            // Menambahkan custom headers jika ada
+            if ($headers) {
+                foreach ($headers as $header => $value) {
+                    $this->mailer->addCustomHeader($header, $value);
+                }
+            }
 
             // Mengirim email
             $this->mailer->send();
