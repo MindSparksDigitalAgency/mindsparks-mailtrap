@@ -16,14 +16,16 @@ class ContactController
 
     public function __construct()
     {
-        // Membuat instansi EmailService
         $this->emailService = new EmailService();
     }
 
     public function sendContactFormEmail($data)
     {
+        // Validasi data
         if (!isset($data['name'], $data['email'], $data['phone'], $data['message'])) {
-            return ["success" => false, "error" => "Missing required fields."];
+            header('Content-Type: application/json');
+            echo json_encode(["success" => false, "error" => "Missing required fields."]);
+            exit;
         }
 
         $name = $data['name'];
@@ -34,35 +36,32 @@ class ContactController
         $to = 'halo@mindsparks.id';
         $subject = 'New Contact Form Submission';
 
-        // Mengubah body email menjadi format HTML
         $body = "
-            <html>
-                <head>
-                    <title>New Contact Form Submission</title>
-                </head>
-                <body>
-                    <h2>New Contact Form Submission</h2>
-                    <p><strong>Name:</strong> $name</p>
-                    <p><strong>Email:</strong> $email</p>
-                    <p><strong>Phone Number:</strong> $phone</p>
-                    <p><strong>Message:</strong></p>
-                    <p>$message</p>
-                </body>
-            </html>
-        ";
+    <html>
+        <head><title>New Contact Form Submission</title></head>
+        <body>
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> $name</p>
+            <p><strong>Email:</strong> $email</p>
+            <p><strong>Phone Number:</strong> $phone</p>
+            <p><strong>Message:</strong></p>
+            <p>$message</p>
+        </body>
+    </html>
+    ";
 
-        // Menambahkan header Content-Type untuk email HTML
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8" . "\r\n";
         $headers .= "From: $email" . "\r\n";
 
-        // Menggunakan EmailService untuk mengirim email
         $result = $this->emailService->sendEmail($to, $subject, $body, $email, $name, $headers);
 
+        header('Content-Type: application/json');
         if ($result === true) {
-            return ["success" => true, "message" => "Your message was sent to {$to} successfully."];
+            echo json_encode(["success" => true, "message" => "Your message was sent successfully."]);
         } else {
-            return ["success" => false, "error" => "Failed to send email. Error: $result"];
+            echo json_encode(["success" => false, "error" => "Failed to send email. Error: $result"]);
         }
+        exit;
     }
 }

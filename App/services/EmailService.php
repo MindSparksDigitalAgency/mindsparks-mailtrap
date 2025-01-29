@@ -40,18 +40,18 @@ class EmailService
             $this->mailer->setFrom($from, $fromName);
             $this->mailer->addAddress($to);
 
-            // Log setiap tahap proses email
             $this->logger->info('Setting email parameters', ['from' => $from, 'to' => $to, 'subject' => $subject]);
 
             $this->mailer->Subject = $subject;
             $this->mailer->Body = $body;
-            $this->mailer->isHTML(true); // Menyatakan bahwa body email adalah HTML
+            $this->mailer->isHTML(true);
 
-            // Menambahkan custom headers jika ada
-            if ($headers) {
+            if ($headers && is_array($headers)) {
                 foreach ($headers as $header => $value) {
                     $this->mailer->addCustomHeader($header, $value);
                 }
+            } elseif ($headers) {
+                $this->logger->warning('Headers is not an array', ['headers' => $headers]);
             }
 
             // Mengirim email
