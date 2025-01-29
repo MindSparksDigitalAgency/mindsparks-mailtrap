@@ -22,7 +22,7 @@ class ContactController
 
     public function sendContactFormEmail($data)
     {
-        if (!isset($data['name'], $data['email'], $data['service'], $data['message'])) {
+        if (!isset($data['name'], $data['email'], $data['phone'], $data['message'])) {
             return ["success" => false, "error" => "Missing required fields."];
         }
 
