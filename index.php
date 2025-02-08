@@ -9,21 +9,12 @@
  */
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\config\Router;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use App\config\{Router, Loggers};
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$logger = new Logger('my_logger');
 
-$logger->pushHandler(new StreamHandler('app.log', Logger::WARNING));
-
-$logger->debug('This is a debug message');
-$logger->info('This is an info message');
-$logger->warning('This is a warning message');
-$logger->error('This is an error message');
-
-
+Loggers::handlerLog();
 Router::handleRequest();
